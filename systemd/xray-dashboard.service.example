@@ -1,0 +1,33 @@
+[Unit]
+Description=Private Xray connection history dashboard
+After=network-online.target tailscaled.service
+Wants=network-online.target
+Requires=tailscaled.service
+
+[Service]
+Type=simple
+User=xraydash
+Group=xraydash
+WorkingDirectory=/opt/xray-dashboard
+EnvironmentFile=/etc/xray-dashboard.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+UMask=0077
+# Replace __TAILSCALE_IPV4__ with the address from: tailscale ip -4
+ExecStart=/opt/xray-dashboard/venv/bin/uvicorn app:app --host __TAILSCALE_IPV4__ --port 8080 --workers 1 --no-access-log
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadOnlyPaths=/opt/xray-dashboard /var/log/x-ui
+ReadWritePaths=/var/lib/xray-dashboard
+
+[Install]
+WantedBy=multi-user.target

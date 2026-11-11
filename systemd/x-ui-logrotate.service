@@ -1,0 +1,6 @@
+[Unit]
+Description=Force rotation of Xray and x-ui logs
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/logrotate --force --state /var/lib/logrotate/x-ui.status /etc/logrotate-x-ui.conf

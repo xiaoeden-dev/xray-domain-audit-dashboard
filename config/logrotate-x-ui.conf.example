@@ -1,0 +1,23 @@
+# Adjust these paths if your Xray installation stores logs elsewhere.
+/var/log/x-ui/access.log
+/var/log/x-ui/error.log
+/var/log/x-ui/3xui.log
+{
+    rotate 672
+    maxage 14
+    missingok
+    notifempty
+    compress
+    delaycompress
+    dateext
+    dateformat -%Y%m%d-%H%M%S
+    copytruncate
+    su root root
+
+    # Apply read-only ACLs after each forced rotation. The dashboard user
+    # should also have r-x on the directory and r-- on the active access log.
+    lastaction
+        /usr/bin/setfacl -m u:xraydash:r-- /var/log/x-ui/access.log
+        /usr/bin/find /var/log/x-ui -maxdepth 1 -type f -name 'access.log*' -exec /usr/bin/setfacl -m u:xraydash:r-- -- {} +
+    endscript
+}

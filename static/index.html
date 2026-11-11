@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Xray Monitor</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#e6edf3;background:#0d1117;font-synthesis:none;text-rendering:optimizeLegibility;--panel:#161b22;--panel2:#0f141b;--border:#30363d;--muted:#8b949e;--text:#e6edf3;--accent:#58a6ff;--green:#3fb950;--red:#f85149}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:#0d1117;color:var(--text)}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+    .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(380px,100%);border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:28px;box-shadow:0 18px 50px #0005}.brand-mark{width:42px;height:42px;border:1px solid #3d4752;border-radius:12px;display:grid;place-items:center;background:#1d2733;color:#79c0ff;font-size:20px;margin:0 auto 16px}.login-card h1{text-align:center;font-size:21px;margin:0 0 7px}.sub{text-align:center;color:var(--muted);font-size:13px;margin:0 0 24px}.field-label{display:block;font-size:12px;color:#c9d1d9;margin-bottom:8px}.field{width:100%;height:42px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:var(--text);padding:0 12px;outline:none}.field:focus{border-color:var(--accent);box-shadow:0 0 0 3px #1f6feb35}.primary{width:100%;height:40px;border:1px solid #2ea043;background:#238636;color:#fff;border-radius:8px;font-weight:600;margin-top:14px}.primary:hover{background:#2ea043}.error{color:#ff7b72;font-size:12px;min-height:18px;margin-top:10px}
+    .app{min-height:100vh}.topbar{height:62px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#010409}.top-brand{display:flex;align-items:center;gap:11px;font-weight:650;letter-spacing:.1px}.mini-mark{width:30px;height:30px;border:1px solid var(--border);border-radius:9px;display:grid;place-items:center;background:#161b22;color:#79c0ff}.top-right{display:flex;align-items:center;gap:14px}.private-label{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px #3fb95020}.text-button{border:1px solid var(--border);background:transparent;color:#c9d1d9;border-radius:7px;padding:7px 11px;font-size:12px}.text-button:hover{background:#21262d}
+    .layout{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:calc(100vh - 62px)}.sidebar{border-right:1px solid var(--border);background:#0d1117;padding:20px 14px}.side-heading{display:flex;justify-content:space-between;align-items:center;padding:0 9px 12px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.client-list{display:grid;gap:4px}.client-tab{width:100%;border:1px solid transparent;background:transparent;color:#c9d1d9;padding:10px 10px;border-radius:8px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px}.client-tab:hover{background:#161b22}.client-tab.active{background:#1f2937;border-color:#33465c;color:#fff}.client-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;font-weight:550}.client-count{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}.sidebar-note{border-top:1px solid var(--border);margin:20px 7px 0;padding-top:14px;color:var(--muted);font-size:11px;line-height:1.55}
+    .main{padding:28px clamp(18px,3vw,42px);min-width:0;max-width:1500px;width:100%;margin:0 auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:22px}.eyebrow{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;margin-bottom:7px}.page-title{font-size:24px;letter-spacing:-.035em;margin:0;font-weight:650}.page-desc{color:var(--muted);font-size:13px;margin:7px 0 0}.refresh-label{color:var(--muted);font-size:11px;white-space:nowrap;padding-top:8px}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:22px}.stat{border:1px solid var(--border);background:var(--panel);border-radius:10px;padding:15px 16px}.stat-label{font-size:11px;color:var(--muted);margin-bottom:8px}.stat-value{font-size:22px;font-weight:650;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+    .toolbar{border:1px solid var(--border);background:var(--panel);border-radius:10px 10px 0 0;padding:13px;display:flex;flex-wrap:wrap;gap:9px;align-items:center}.search-wrap{position:relative;flex:1 1 260px;min-width:190px}.search-icon{position:absolute;left:11px;top:10px;color:var(--muted);font-size:14px}.search{width:100%;height:36px;background:#0d1117;border:1px solid var(--border);border-radius:7px;padding:0 10px 0 34px;color:var(--text);outline:none;font-size:12px}.search:focus,.date-input:focus{border-color:var(--accent);box-shadow:0 0 0 2px #1f6feb30}.date-input{height:36px;background:#0d1117;border:1px solid var(--border);border-radius:7px;padding:0 9px;color:var(--text);font-size:11px;outline:none;color-scheme:dark}.filter-label{color:var(--muted);font-size:11px}.small-button{height:36px;border:1px solid var(--border);background:#21262d;color:#c9d1d9;border-radius:7px;padding:0 11px;font-size:11px}.small-button:hover{background:#30363d}.results-head{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;border-left:1px solid var(--border);border-right:1px solid var(--border);background:#111820;color:var(--muted);font-size:11px}.results{border:1px solid var(--border);border-top:0;border-radius:0 0 10px 10px;overflow:hidden;background:var(--panel)}.event{display:grid;grid-template-columns:minmax(0,1fr) 160px 90px;align-items:center;gap:16px;padding:13px 16px;border-top:1px solid #21262d;min-height:64px}.event:first-child{border-top:0}.event:hover{background:#1c2129}.site{display:flex;align-items:center;gap:11px;min-width:0}.favicon{width:28px;height:28px;border:1px solid var(--border);border-radius:7px;background:#0d1117;display:grid;place-items:center;flex:0 0 auto;overflow:hidden;color:#8b949e;font-size:12px;font-weight:650}.favicon img{width:17px;height:17px;object-fit:contain}.site-copy{min-width:0}.domain{font-size:13px;font-weight:570;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.destination-note{font-size:10px;color:var(--muted);margin-top:4px}.meta{font-size:11px;color:#c9d1d9}.meta span{color:var(--muted);display:block;font-size:10px;margin-top:4px}.time{text-align:right;font-size:11px;color:#c9d1d9;font-variant-numeric:tabular-nums;white-space:nowrap}.time span{display:block;color:var(--muted);font-size:10px;margin-top:4px}.empty{padding:52px 20px;text-align:center;color:var(--muted);font-size:13px}.bottom-row{display:flex;justify-content:space-between;align-items:center;padding:13px 2px;color:var(--muted);font-size:11px}.load-more{border:1px solid var(--border);background:#21262d;color:#c9d1d9;border-radius:7px;padding:7px 12px;font-size:11px}.load-more:disabled{opacity:.45;cursor:default}.toast{position:fixed;bottom:18px;right:18px;padding:10px 14px;border:1px solid var(--border);background:#21262d;color:var(--text);border-radius:8px;font-size:12px;box-shadow:0 8px 30px #0008}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--border);padding:12px 14px}.side-heading{padding-bottom:8px}.client-list{display:flex;overflow:auto;padding-bottom:2px}.client-tab{width:auto;min-width:max-content}.sidebar-note{display:none}.main{padding-top:20px}.event{grid-template-columns:minmax(0,1fr) 82px;gap:9px}.meta{display:none}.time{font-size:10px}.stats{gap:8px}.stat{padding:12px}.stat-value{font-size:19px}}
+    @media(max-width:520px){.topbar{padding:0 14px}.private-label{display:none}.page-head{margin-bottom:16px}.page-title{font-size:21px}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.stat-label{font-size:10px}.stat-value{font-size:17px}.toolbar{padding:10px}.date-input{flex:1;min-width:110px}.refresh-label{display:none}}
+  </style>
+</head>
+<body>
+  <section id="loginView" class="login-wrap hidden">
+    <form id="loginForm" class="login-card">
+      <div class="brand-mark">⌁</div>
+      <h1>Xray Monitor</h1>
+      <p class="sub">Private connection history</p>
+      <label class="field-label" for="password">Administrator password</label>
+      <input id="password" class="field" type="password" autocomplete="current-password" required autofocus>
+      <button class="primary" type="submit">Sign in</button>
+      <div id="loginError" class="error" role="alert"></div>
+    </form>
+  </section>
+
+  <section id="appView" class="app hidden">
+    <header class="topbar">
+      <div class="top-brand"><div class="mini-mark">⌁</div><span>Xray Monitor</span></div>
+      <div class="top-right"><div class="private-label"><span class="dot"></span> Private Tailscale network</div><button id="logoutBtn" class="text-button">Sign out</button></div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="side-heading"><span>Clients</span><span id="clientTotal">0</span></div>
+        <nav id="clientList" class="client-list" aria-label="VLESS clients"></nav>
+        <div class="sidebar-note">Select a client to inspect its recorded connection history. Only domain-level metadata is stored.</div>
+      </aside>
+      <main class="main">
+        <div class="page-head">
+          <div><div class="eyebrow">Connection history</div><h1 id="selectedTitle" class="page-title">All clients</h1><p class="page-desc">Sniffed domains and destination metadata from Xray access logs.</p></div>
+          <div id="refreshLabel" class="refresh-label">Waiting for data…</div>
+        </div>
+        <section class="stats" aria-label="Connection statistics">
+          <div class="stat"><div class="stat-label">Recorded connections</div><div id="statTotal" class="stat-value">—</div></div>
+          <div class="stat"><div class="stat-label">Identified domains</div><div id="statDomains" class="stat-value">—</div></div>
+          <div class="stat"><div class="stat-label">Clients</div><div id="statClients" class="stat-value">—</div></div>
+        </section>
+        <section>
+          <div class="toolbar">
+            <div class="search-wrap"><span class="search-icon">⌕</span><input id="searchInput" class="search" type="search" placeholder="Search domains or destinations…" autocomplete="off"></div>
+            <span class="filter-label">From</span><input id="dateFrom" class="date-input" type="date" aria-label="Start date">
+            <span class="filter-label">To</span><input id="dateTo" class="date-input" type="date" aria-label="End date">
+            <button id="clearFilters" class="small-button">Clear</button>
+          </div>
+          <div class="results-head"><span id="resultLabel">Latest connections</span><span>Times shown in Sri Lanka time</span></div>
+          <div id="eventList" class="results"><div class="empty">Loading connection history…</div></div>
+          <div class="bottom-row"><span id="shownLabel">—</span><button id="loadMore" class="load-more" disabled>Load more</button></div>
+        </section>
+      </main>
+    </div>
+  </section>
+  <div id="toast" class="toast hidden" role="status"></div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const state = { authenticated:false, client:'__all__', clients:[], total:0, offset:0, limit:50, loading:false, searchTimer:null, pollTimer:null, lastRefresh:null };
+  const localZone = 'Asia/Colombo';
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const fmtNumber = value => new Intl.NumberFormat('en-LK').format(Number(value || 0));
+  const fmtDateTime = iso => {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return {date:'Unknown date',time:'—'};
+    return {
+      date:new Intl.DateTimeFormat('en-LK',{timeZone:localZone,day:'2-digit',month:'short',year:'numeric'}).format(date),
+      time:new Intl.DateTimeFormat('en-LK',{timeZone:localZone,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(date)
+    };
+  };
+  const showToast = message => { $('toast').textContent=message; $('toast').classList.remove('hidden'); setTimeout(()=>$('toast').classList.add('hidden'),2600); };
+  async function api(url, options={}) {
+    const response = await fetch(url, {credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});
+    if (response.status===401 && !url.endsWith('/api/login')) { showLogin(); throw new Error('Session expired'); }
+    const data = await response.json().catch(()=>({detail:'Unexpected server response'}));
+    if (!response.ok) throw new Error(data.detail || `Request failed (${response.status})`);
+    return data;
+  }
+  function showLogin(){ state.authenticated=false; clearInterval(state.pollTimer); $('appView').classList.add('hidden'); $('loginView').classList.remove('hidden'); $('password').value=''; }
+  function showApp(){ state.authenticated=true; $('loginView').classList.add('hidden'); $('appView').classList.remove('hidden'); refreshAll(); clearInterval(state.pollTimer); state.pollTimer=setInterval(()=>{ if(!document.hidden) refreshAll(true); },10000); }
+  $('loginForm').addEventListener('submit', async event => {
+    event.preventDefault(); $('loginError').textContent='';
+    try { await api('/api/login',{method:'POST',body:JSON.stringify({password:$('password').value})}); showApp(); }
+    catch(error){ $('loginError').textContent=error.message; }
+  });
+  $('logoutBtn').addEventListener('click', async()=>{ try{await api('/api/logout',{method:'POST',body:'{}'});}catch(e){} showLogin(); });
+  $('searchInput').addEventListener('input',()=>{ clearTimeout(state.searchTimer); state.searchTimer=setTimeout(()=>loadEvents(false),300); });
+  $('dateFrom').addEventListener('change',()=>loadEvents(false)); $('dateTo').addEventListener('change',()=>loadEvents(false));
+  $('clearFilters').addEventListener('click',()=>{ $('searchInput').value=''; $('dateFrom').value=''; $('dateTo').value=''; loadEvents(false); });
+  $('loadMore').addEventListener('click',()=>loadEvents(true));
+
+  function renderClients(){
+    $('clientTotal').textContent=state.clients.length;
+    const allCount=state.clients.reduce((sum,c)=>sum+Number(c.event_count),0);
+    const items=[{client:'__all__',event_count:allCount},...state.clients];
+    $('clientList').innerHTML=items.map(item=>{
+      const selected=state.client===item.client;
+      const name=item.client==='__all__'?'All clients':item.client;
+      return `<button class="client-tab ${selected?'active':''}" data-client="${escapeHtml(item.client)}"><span class="client-name">${escapeHtml(name)}</span><span class="client-count">${fmtNumber(item.event_count)}</span></button>`;
+    }).join('');
+    $('clientList').querySelectorAll('[data-client]').forEach(button=>button.addEventListener('click',()=>{
+      state.client=button.dataset.client; $('selectedTitle').textContent=state.client==='__all__'?'All clients':state.client; renderClients(); loadEvents(false);
+    }));
+  }
+  async function refreshStats(){
+    const stats=await api('/api/stats');
+    $('statTotal').textContent=fmtNumber(stats.total);
+    $('statDomains').textContent=fmtNumber(stats.identified);
+    $('statClients').textContent=fmtNumber(stats.clients);
+  }
+  async function refreshClients(){ state.clients=await api('/api/clients'); renderClients(); }
+  function buildDateQuery(){
+    const from=$('dateFrom').value, to=$('dateTo').value;
+    const query=new URLSearchParams();
+    if(from) query.set('from_utc',new Date(`${from}T00:00:00+05:30`).toISOString());
+    if(to){ const next=new Date(`${to}T00:00:00+05:30`); next.setUTCDate(next.getUTCDate()+1); query.set('to_utc',next.toISOString()); }
+    return query;
+  }
+  async function loadEvents(append=false, silent=false){
+    if(state.loading)return; state.loading=true;
+    if(!append && !silent) $('eventList').innerHTML='<div class="empty">Loading connection history…</div>';
+    try{
+      const query=buildDateQuery(); query.set('client',state.client); query.set('q',$('searchInput').value.trim()); query.set('limit',String(state.limit)); query.set('offset',String(append?state.offset:0));
+      const result=await api('/api/events?'+query.toString()); state.total=result.total; state.offset=append?state.offset+result.items.length:result.items.length;
+      const html=result.items.map(renderEvent).join('');
+      if(append) $('eventList').insertAdjacentHTML('beforeend',html); else $('eventList').innerHTML=html || '<div class="empty">No matching connection records.</div>';
+      $('resultLabel').textContent=`${fmtNumber(result.total)} matching records`;
+      $('shownLabel').textContent=`Showing ${fmtNumber(state.offset)} of ${fmtNumber(state.total)}`;
+      $('loadMore').disabled=state.offset>=state.total;
+      $('loadMore').textContent=state.offset>=state.total?'No more records':'Load more';
+      state.lastRefresh=new Date(); $('refreshLabel').textContent='Updated '+state.lastRefresh.toLocaleTimeString('en-LK',{timeZone:localZone,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    }catch(error){ if(!silent && error.message!=='Session expired') $('eventList').innerHTML=`<div class="empty">${escapeHtml(error.message)}</div>`; }
+    finally{state.loading=false;}
+  }
+  function favicon(domain){
+    if(!domain)return '<span>?</span>';
+    const safe=encodeURIComponent(domain);
+    // Request the site's own /favicon.ico directly; no third-party favicon lookup service is used.
+    return `<img loading="lazy" src="https://${safe}/favicon.ico" alt="" referrerpolicy="no-referrer" onerror="this.remove();this.parentElement.textContent='${escapeHtml(domain.slice(0,1).toUpperCase())}'">`;
+  }
+  function renderEvent(item){
+    const domain=item.domain;
+    const title=domain || (item.destination_kind==='masked'?'Destination masked':item.destination_kind==='ip'?'IP address destination':'Hostname unavailable');
+    const note=domain?`${item.protocol.toUpperCase()}${item.port? ` · Port ${item.port}`:''}`:`${item.destination}${item.port? ` · Port ${item.port}`:''}`;
+    const stamp=fmtDateTime(item.timestamp_utc);
+    const siteIcon=domain?favicon(domain):'<span>·</span>';
+    return `<article class="event"><div class="site"><div class="favicon">${siteIcon}</div><div class="site-copy"><div class="domain" title="${escapeHtml(title)}">${escapeHtml(title)}</div><div class="destination-note">${escapeHtml(note)}</div></div></div><div class="meta">${escapeHtml(item.client)}<span>${escapeHtml(item.inbound||'Xray inbound')}</span></div><div class="time">${escapeHtml(stamp.time)}<span>${escapeHtml(stamp.date)}</span></div></article>`;
+  }
+  async function refreshAll(silent=false){
+    try{ await Promise.all([refreshStats(),refreshClients()]); await loadEvents(false,silent); }
+    catch(error){ if(!silent && error.message!=='Session expired') showToast(error.message); }
+  }
+  async function init(){
+    try{ const session=await api('/api/session'); if(session.authenticated) showApp(); else showLogin(); }
+    catch(error){showLogin(); $('loginError').textContent='Unable to connect to the dashboard service.';}
+  }
+  init();
+})();
+</script>
+</body>
+</html>

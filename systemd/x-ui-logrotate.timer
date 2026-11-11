@@ -1,0 +1,10 @@
+[Unit]
+Description=30-minute Xray log rotation schedule
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=30min
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
