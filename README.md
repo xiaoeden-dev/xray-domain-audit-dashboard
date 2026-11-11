@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Ubuntu 24.04](https://img.shields.io/badge/Reference%20OS-Ubuntu%2024.04-E95420?logo=ubuntu&logoColor=white)](docs/02-prerequisites-and-preparation.md)
-[![AI assisted](https://img.shields.io/badge/AI-assisted-OpenAI-412991)](AI-ASSISTANCE.md)
+[![AI assisted](https://img.shields.io/badge/AI-assisted-OpenAI-412991)](AI-ASSISTANCE.md)\n\n![Project status](https://img.shields.io/badge/status-under%20active%20development-red)\n\n> **Under active development:** This project is still being updated. Features, documentation, and compatibility guidance may change as the project evolves.
 
 A self-hosted, open-source reference implementation for **Xray Core and 3x-ui domain-level connection auditing**. It associates identifiable destination domains with VLESS client labels and timestamps, then provides searchable client activity history through a private FastAPI and SQLite dashboard.
 
